@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Flask Todo List App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="../static/signup.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(() => {
+        function setStatus(data) {
+          console.log(data);
+          $.ajax({
+            url: "/setStatus",
+            type: "PUT",
+            data: data,
+            success: function (response) {
+              console.log(response);
+              // alert(message);
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        }
+
+        function updateItem(data) {
+          $.ajax({
+            url: "/updateItem",
+            type: "PUT",
+            data: data,
+            success: function (response) {
+              console.log(response);
+              const { message = "" } = JSON.parse(response);
+              alert(message);
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        }
+
+        function deleteItem(data) {
+          const { id } = data;
+          $.ajax({
+            url: "/deleteItem",
+            type: "DELETE",
+            data: data,
+            success: function (response) {
+              console.log(response);
+              getitems();
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        }
+
+        function getitems() {
+          $.ajax({
+            url: "/getitems",
+            type: "GET",
+            success: function (response) {
+              const data = JSON.parse(response);
+              $("#items").children().remove();
+              data.forEach((item, index) => {
+                const { name, available, price, _id: id } = item;
+                const i = `
+                <tr id="itemRow${id}">
+                  <th scope="row">${index + 1}</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="inputTitle"
+                      id="inputTitle${id}"
+                      value="${name}"
+                    /></td>
+                  <td>
+                    <input
+                      type="text"
+                      name="inputDescription"
+                      id="inputDescription${id}"
+                      value="${available}"
+                    /></td>
+                  <td> ${price}
+                  </td>
+                  <td> 
+                    <button type="button" class="btn btn-primary" id="save${id}">Save</button>
+                  </td>
+                  <td> 
+                    <button type="button" class="btn btn-danger" id="deleteId${id}">Delete </button>
+                  </td>
+                </tr>
+              `;
+                $("#items").append(i);
+                $(`#checkboxIndex${id}`).change((e) => {
+                  const data = {
+                    id,
+                    isComplete: $(`#checkboxIndex${id}`).is(":checked") ? 1 : 0,
+                  };
+                  setStatus(data);
+                });
+
+                $(`#deleteId${id}`).click(() => {
+                  const data = { id };
+                  deleteItem(data);
+                });
+                $(`#save${id}`).click(() => {
+                  const title = $(`#inputTitle${id}`).val();
+                  const description = $(`#inputDescription${id}`).val();
+                  const data = { id, title, description };
+                  updateItem(data);
+                });
+              });
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
+        // fetch data for the first time
+        getitems();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/userHome">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/showAddItem">Add Item</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <h3 class="text-muted">Python Flask App</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Welcome Home</h1>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Available Days</th>
+            <th scope="col">Price</th>
+            <th scope="col">Modify</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+      </table>
+    </div>
+  </body>
+</html>
