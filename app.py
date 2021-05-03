@@ -91,7 +91,7 @@ def signUp():
 
     # validate the received values
     if name and email and password:
-        new = {"name": name, "email": email, "password": password}
+        new = {"name": name, "email": email, "password": password, "level": 0}
         _id = myusers.insert_one(new)
         session['user'] = _id
         return json.dumps({'message': 'Video created successfully !', "_id": _id})
