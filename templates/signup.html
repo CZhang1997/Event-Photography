@@ -16,14 +16,41 @@
     <script>
       $(function () {
         $("#btnSignUp").click(function () {
+          const data = $("form").serialize();
+          print(data);
           $.ajax({
             url: "/signUp",
-            data: $("form").serialize(),
+            data: data,
             type: "POST",
             success: function (response) {
               const data = JSON.parse(response);
               alert(data.message);
               window.location.href = "/userHome";
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        });
+        $("#inputEmail").change(() => {
+          const val = $("#inputEmail").val();
+          console.log(val);
+
+          $.ajax({
+            url: "/users",
+            data: { inputEmail: val },
+            type: "PUT",
+            success: function (response) {
+              const data = JSON.parse(response);
+              const { exist } = data;
+              console.log(exist);
+              if (exist) {
+                $("#message").html(
+                  "Sorry, this username/email has already registered"
+                );
+              } else {
+                $("#message").html("you can use this username!");
+              }
             },
             error: function (error) {
               console.log(error);
@@ -81,6 +108,7 @@
             required
             autofocus
           />
+          <div id="message"></div>
           <label for="inputPassword" class="sr-only">Password</label>
           <input
             type="password"

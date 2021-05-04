@@ -14,22 +14,6 @@ myusers = mydb["users"]
 myitems = mydb["items"]
 mycarts = mydb["carts"]
 
-# mysql = MySQL()
-
-# # MySQL configurations
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = '123456'
-# app.config['MYSQL_DATABASE_DB'] = 'TodoList'
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-# app.config['MYSQL_DATABASE_PORT'] = 3306
-# mysql.init_app(app)
-
-# pip3 install flask-mysql
-# use todolist;
-# drop table tbl_user;
-# CREATE TABLE tbl_user( userid INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30) , email VARCHAR(30),password VARCHAR(30));
-# CREATE TABLE tbl_todo( id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(30) , description VARCHAR(60), userid int(11), isComplete boolean);
-
 app.secret_key = 'secret key can be anything!'
 
 
@@ -138,6 +122,13 @@ def getItems():
     except Exception as e:
         return render_template('error.html',error = str(e))
 
+@app.route('/users', methods=['PUT'])
+def checkUsername():
+    email = request.form['inputEmail']
+    record = myusers.find_one({"email": email })
+    # print(record)
+    return json.dumps({"exist": record != None})
+
 @app.route('/items/<id>', methods=['DELETE'])
 def deleteItem(id):
     if session.get('user'):
@@ -167,12 +158,8 @@ def addCarts():
     # read the posted values from the UI
     try:
         if session.get('user'):
-            # name = request.form['name']
-            # available = request.form['available']
-            # price = request.form['price']
             itemId = request.form['id']
             userId = session.get('user')
-            # newItem = {"name": name , "available": available, "price": price, "itemId": itemId, "userId": userId }
             newItem = {"itemId": itemId, "userId": userId}
             _id = mycarts.insert_one(newItem)
             return json.dumps({"message": "add carts done"})
