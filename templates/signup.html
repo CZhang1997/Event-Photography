@@ -17,7 +17,6 @@
       $(function () {
         $("#btnSignUp").click(function () {
           const data = $("form").serialize();
-          print(data);
           $.ajax({
             url: "/signUp",
             data: data,

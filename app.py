@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, json, redirect
 from flaskext.mysql import MySQL
 from flask import session
-
+import hashlib
 from bson.objectid import ObjectId
 import pymongo
 
@@ -32,7 +32,7 @@ def showSignin():
 @app.route('/userHome')
 def userHome():
     if session.get('user'):
-        return render_template('userHome.html', username = session.get('name'))
+        return render_template('userHome.html', userLevel = session.get('level'))
     else:
         return render_template('error.html',error = 'Unauthorized Access')
 
@@ -46,6 +46,7 @@ def admin():
 @app.route('/logout')
 def logout():
     session.pop('user',None)
+    session.pop('level',None)
     return redirect('/')
 
 @app.route('/showAddItem')
@@ -54,17 +55,19 @@ def showAddItem():
 
 @app.route('/showCarts')
 def showCarts():
-    return render_template('showCarts.html')
+    return render_template('showCarts.html', userLevel = session.get('level'))
 
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
     try:
         email = request.form['inputEmail']
         password = request.form['inputPassword']
+        password = hashlib.sha1(password.encode()).hexdigest()
         record = myusers.find_one({"email":email})
         record['_id'] = str(record['_id'])
         if record['password'] == password:
             session['user'] = record['_id']
+            session['level'] = record['level']
             return redirect('/userHome')
         else:
             return render_template('error.html',error = 'Wrong Email address or Password.')
@@ -79,13 +82,15 @@ def signUp():
     name = request.form['inputName']
     email = request.form['inputEmail']
     password = request.form['inputPassword']
-
+    password = hashlib.sha1(password.encode()).hexdigest()
     # validate the received values
     if name and email and password:
         new = {"name": name, "email": email, "password": password, "level": 0}
-        _id = myusers.insert_one(new)
-        session['user'] = _id
-        return json.dumps({'message': 'Video created successfully !', "_id": _id})
+        _id = myusers.insert_one(new).inserted_id
+        print(str(_id))
+        session['user'] = str(_id)
+        session['level'] = 0
+        return json.dumps({'message': 'Video created successfully !', "_id": str(_id)})
     else:
         return json.dumps({'html':'<span>Enter the required fields!</span>'})
 

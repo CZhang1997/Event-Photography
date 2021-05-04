@@ -12,6 +12,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
+        const userLevel = Number("{{userLevel}}");
+        if (userLevel === 0) {
+          $("#admin_view").remove();
+          $("#admin_add").remove();
+        }
         function setStatus(data) {
           console.log(data);
           $.ajax({
@@ -78,7 +83,7 @@
                     ${available}</td>
                   <td> $${price}
                   </td>
-                  <td> 
+                  <td>
                     <button type="button" class="btn btn-primary" id="addCart${id}">Add</button>
                   </td>
                 </tr>
@@ -114,10 +119,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="/showCarts">Shopping Cart</a>
               </li>
-              <li class="nav-item">
+              <li id="admin_view" class="nav-item">
                 <a class="nav-link" href="/admin">Admin View</a>
               </li>
-              <li class="nav-item">
+              <li id="admin_add" class="nav-item">
                 <a class="nav-link" href="/showAddItem">Add Item</a>
               </li>
               <li class="nav-item">
