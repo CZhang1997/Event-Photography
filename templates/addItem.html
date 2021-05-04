@@ -18,8 +18,9 @@
       $(function () {
         $("#btnAddItem").click(function () {
           console.log($("form").serialize());
+          const data = $("form").serialize();
           $.ajax({
-            url: "/addItem",
+            url: "/items",
             data: $("form").serialize(),
             type: "POST",
             success: function (response) {

@@ -30,7 +30,7 @@
 
         function addCarts(data) {
           $.ajax({
-            url: "/addCarts",
+            url: "/carts",
             type: "POST",
             data: data,
             success: function (response) {
@@ -62,7 +62,7 @@
 
         function getitems() {
           $.ajax({
-            url: "/getItems",
+            url: "/items",
             type: "GET",
             success: function (response) {
               const data = JSON.parse(response);
@@ -76,7 +76,7 @@
                   ${name}</td>
                   <td>
                     ${available}</td>
-                  <td> ${price}
+                  <td> $${price}
                   </td>
                   <td> 
                     <button type="button" class="btn btn-primary" id="addCart${id}">Add</button>
@@ -113,6 +113,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/showCarts">Shopping Cart</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin">Admin View</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/showAddItem">Add Item</a>

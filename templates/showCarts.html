@@ -30,7 +30,7 @@
 
         function addCarts(data) {
           $.ajax({
-            url: "/addCarts",
+            url: "/carts",
             type: "POST",
             data: data,
             success: function (response) {
@@ -47,11 +47,11 @@
         function deleteItem(data) {
           const { id } = data;
           $.ajax({
-            url: `/deleteCartItem/${id}`,
+            url: `/carts/${id}`,
             type: "DELETE",
             success: function (response) {
               console.log(response);
-              getitems();
+              getCarts();
             },
             error: function (err) {
               console.log(err);
@@ -59,9 +59,9 @@
           });
         }
 
-        function getitems() {
+        function getCarts() {
           $.ajax({
-            url: "/getCarts",
+            url: "/carts",
             type: "GET",
             success: function (response) {
               const data = JSON.parse(response);
@@ -70,7 +70,7 @@
               var total = 0;
               data.forEach((item, index) => {
                 const { name, available, price, _id: id } = item;
-                total += Number(price.substring(1));
+                total += price;
                 const i = `
                 <tr id="itemRow${id}">
                   <th scope="row">${index + 1}</th>
@@ -78,7 +78,7 @@
                   ${name}</td>
                   <td>
                     ${available}</td>
-                  <td> ${price}
+                  <td> $${price}
                   </td>
                   <td> 
                     <button type="button" class="btn btn-danger" id="deleteId${id}">Delete </button>
@@ -102,7 +102,7 @@
           });
         }
         // fetch data for the first time
-        getitems();
+        getCarts();
       });
     </script>
   </head>

@@ -12,25 +12,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-        function setStatus(data) {
-          console.log(data);
-          $.ajax({
-            url: "/setStatus",
-            type: "PUT",
-            data: data,
-            success: function (response) {
-              console.log(response);
-              // alert(message);
-            },
-            error: function (err) {
-              console.log(err);
-            },
-          });
-        }
+        // function setStatus(data) {
+        //   console.log(data);
+        //   $.ajax({
+        //     url: "/setStatus",
+        //     type: "PUT",
+        //     data: data,
+        //     success: function (response) {
+        //       console.log(response);
+        //       // alert(message);
+        //     },
+        //     error: function (err) {
+        //       console.log(err);
+        //     },
+        //   });
+        // }
 
         function updateItem(data) {
+          const { id } = data;
           $.ajax({
-            url: "/updateItem",
+            url: `/items/${id}`,
             type: "PUT",
             data: data,
             success: function (response) {
@@ -47,7 +48,7 @@
         function deleteItem(data) {
           const { id } = data;
           $.ajax({
-            url: "/deleteItem",
+            url: `/items/${id}`,
             type: "DELETE",
             data: data,
             success: function (response) {
@@ -62,7 +63,7 @@
 
         function getitems() {
           $.ajax({
-            url: "/getitems",
+            url: "/items",
             type: "GET",
             success: function (response) {
               const data = JSON.parse(response);
@@ -86,7 +87,13 @@
                       id="inputDescription${id}"
                       value="${available}"
                     /></td>
-                  <td> ${price}
+                  <td> 
+                    <input
+                      type="text"
+                      name="inputPrice"
+                      id="inputPrice${id}"
+                      value="$${price}"
+                    />
                   </td>
                   <td> 
                     <button type="button" class="btn btn-primary" id="save${id}">Save</button>
@@ -97,22 +104,16 @@
                 </tr>
               `;
                 $("#items").append(i);
-                $(`#checkboxIndex${id}`).change((e) => {
-                  const data = {
-                    id,
-                    isComplete: $(`#checkboxIndex${id}`).is(":checked") ? 1 : 0,
-                  };
-                  setStatus(data);
-                });
 
                 $(`#deleteId${id}`).click(() => {
                   const data = { id };
                   deleteItem(data);
                 });
                 $(`#save${id}`).click(() => {
-                  const title = $(`#inputTitle${id}`).val();
-                  const description = $(`#inputDescription${id}`).val();
-                  const data = { id, title, description };
+                  const name = $(`#inputTitle${id}`).val();
+                  const available = $(`#inputDescription${id}`).val();
+                  const price = $(`#inputPrice${id}`).val();
+                  const data = { id, name, available, price };
                   updateItem(data);
                 });
               });

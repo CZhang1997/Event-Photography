@@ -52,6 +52,13 @@ def userHome():
     else:
         return render_template('error.html',error = 'Unauthorized Access')
 
+@app.route('/admin')
+def admin():
+    if session.get('user'):
+        return render_template('admin.html')
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
+
 @app.route('/logout')
 def logout():
     session.pop('user',None)
@@ -98,7 +105,7 @@ def signUp():
     else:
         return json.dumps({'html':'<span>Enter the required fields!</span>'})
 
-@app.route('/addItem',methods=['POST'])
+@app.route('/items',methods=['POST'])
 def addItem():
     # read the posted values from the UI
     try:
@@ -106,6 +113,8 @@ def addItem():
             name = request.form['name']
             available = request.form['available']
             price = request.form['price']
+            if price[0] == '$':
+                price = float(price[1:])
             newItem = {"name": name , "available": available, "price": price }
             _id = myitems.insert_one(newItem)
             return json.dumps({"message": "add item done"})
@@ -115,8 +124,8 @@ def addItem():
     except Exception as e:
         return render_template('error.html',error = str(e))
 
-@app.route('/getItems', methods=['GET'])
-def getTodoList():
+@app.route('/items', methods=['GET'])
+def getItems():
     try:
         if session.get('user'):
             response = []
@@ -129,8 +138,31 @@ def getTodoList():
     except Exception as e:
         return render_template('error.html',error = str(e))
 
+@app.route('/items/<id>', methods=['DELETE'])
+def deleteItem(id):
+    if session.get('user'):
+	    query = { '_id':  ObjectId(id) }
+	    myitems.delete_one(query)
+	    return json.dumps({'message': 'Video deleted successfully !'})
+    else:
+        return json.dumps({"code":404 , "message":"please login first"})
 
-@app.route('/addCarts',methods=['POST'])
+@app.route('/items/<id>', methods=['PUT'])
+def updateItem(id):
+    if session.get('user'):
+        query = { '_id':  ObjectId(id) }
+        name = request.form['name']
+        available = request.form['available']
+        price = request.form['price']
+        if price[0] == '$':
+            price = float(price[1:])
+        newItem ={"$set": {"name": name , "available": available, "price": price }}
+        myitems.update_one(query, newItem)
+        return json.dumps({'message': 'Video deleted successfully !'})
+    else:
+        return json.dumps({"code":404 , "message":"please login first"})
+
+@app.route('/carts',methods=['POST'])
 def addCarts():
     # read the posted values from the UI
     try:
@@ -150,7 +182,7 @@ def addCarts():
     except Exception as e:
         return render_template('error.html',error = str(e))
 
-@app.route('/getCarts', methods=['GET'])
+@app.route('/carts', methods=['GET'])
 def getCarts():
     try:
         if session.get('user'):
@@ -160,6 +192,8 @@ def getCarts():
                 record['_id'] = str(record['_id'])
                 itemId = record["itemId"]
                 item = myitems.find_one({"_id": ObjectId(itemId)})
+                if item == None:
+                    continue
                 record["name"] = item["name"]
                 record["available"] = item["available"]
                 record["price"] = item["price"]
@@ -170,8 +204,8 @@ def getCarts():
     except Exception as e:
         return render_template('error.html',error = str(e))
 
-@app.route('/deleteCartItem/<id>', methods=['DELETE'])
-def deleteVideo(id):
+@app.route('/carts/<id>', methods=['DELETE'])
+def deleteCartsItem(id):
 	query = { '_id':  ObjectId(id) }
 	mycarts.delete_one(query)
 	return json.dumps({'message': 'cart item deleted successfully !'})
