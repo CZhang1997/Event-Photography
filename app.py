@@ -19,6 +19,8 @@ app.secret_key = 'secret key can be anything!'
 
 @app.route("/")
 def main():
+    if session.get('user'):
+        return redirect("/userHome")
     return render_template('index.html')
 
 @app.route('/showSignUp')
@@ -38,7 +40,7 @@ def userHome():
 
 @app.route('/admin')
 def admin():
-    if session.get('user'):
+    if session.get('user') and session.get('level') > 0:
         return render_template('admin.html')
     else:
         return render_template('error.html',error = 'Unauthorized Access')
@@ -51,11 +53,18 @@ def logout():
 
 @app.route('/showAddItem')
 def showAddItem():
-    return render_template('addItem.html')
+    if session.get('user') and session.get('level') > 0:
+        return render_template('addItem.html')
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
 
 @app.route('/showCarts')
 def showCarts():
-    return render_template('showCarts.html', userLevel = session.get('level'))
+    if session.get('user'):
+        return render_template('showCarts.html', userLevel = session.get('level'))
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
+    
 
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
