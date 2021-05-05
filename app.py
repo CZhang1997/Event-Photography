@@ -1,6 +1,5 @@
 
 from flask import Flask, render_template, request, json, redirect
-from flaskext.mysql import MySQL
 from flask import session
 import hashlib
 from bson.objectid import ObjectId

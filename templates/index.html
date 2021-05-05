@@ -4,71 +4,151 @@
 <head>
     <title>Python Flask Todo List App</title>
 
+     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <style type="text/css">
+      .card {
+        padding-top: 5%;
+        padding-bottom: 2%;
+        margin-bottom: 15px;
+        border-width: 5px;
+        border-color: rgb(63, 150, 248);
+        border-radius: 15px;
+      }
+
+      .card-text {
+        text-align: center;
+        font-size: large;
+        font-weight: bold;
+      }
+
+      .footer_text {
+        color:#ECF5FF;
+        text-align: center;
+      }
+     </style>
+      
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="header">
-           
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
-              <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="showSignin">Sign in</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="showSignUp">Sign up</a>
-                  </li>
-                </ul>
-               
-              </div>
-            </nav>
-
-
-            <h3 class="text-muted">Python Flask App</h3>
+    <!-- Navigation Bar -->
+    <div style="background-color: #1b52b8; padding: 1.5% 1% 1.5% 1%; ">
+      <nav class="navbar navbar-expand-lg navbar-dark"> 
+        <a class="navbar-brand" style="font-family:Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-large;" >FR Photography Studio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="showSignin">Sign in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="showSignUp">Sign up</a>
+            </li>
+          </ul>
+          
+          <form class="form-inline my-2 my-lg-0">
+            <input class="mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: #da1879; color: white;">Search</button>
+          </form>
         </div>
-
-        <div class="jumbotron">
-            <h1>Todo List App</h1>
-            <p class="lead"></p>
-            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Sign up today</a>
-            </p>
-        </div>
-
-        <div class="row marketing">
-            <div class="col-lg-6">
-                <h4>Todo List</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-
-                <h4>Todo List</h4>
-                <p>Mauris aliquet nibh quis tortor feugiat sodales.Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-
-                <h4>Todo List</h4>
-                <p>Praesent ac nisi vitae sem suscipit vulputate.Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-            </div>
-
-            <div class="col-lg-6">
-                <h4>Todo List</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-
-                <h4>Todo List</h4>
-                <p>Vestibulum vel enim sed eros dapibus aliquam id sed tellus.Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-
-                <h4>Todo List</h4>
-                <p>Praesent consequat metus nec ex porttitor dignissim.Suspendisse non leo ultrices, dapibus risus tincidunt, pellentesque velit.</p>
-            </div>
-        </div>
-
-        
-
+      </nav>
     </div>
+
+     
+      <!-- Main Page -->
+      <div style="background-color: #ECF5FF; padding: 1% 1% 1% 1%;"> 
+        <div class = "row">
+            <!-- Left Area-->
+            <div class="col-md-2"></div>
+            
+            <!-- Middle Area-->
+            <div class="col-md-8">
+              <!-- Card 1: Wedding-->
+              <div class="card photo_card" >
+                <img src="{{url_for('static', filename='wedding.jpg')}}"/>
+                <div class="card-body">
+                    <p class="card-text">Wedding</p>
+                    
+                </div>
+            </div>
+
+            <!-- Card 2: Travel -->
+            <div class="card photo_card" >
+              <img src="{{url_for('static', filename='travel.jpg')}}"/>
+              <div class="card-body">
+                  <p class="card-text">Travel</p> 
+              </div>
+          </div>
+
+          <!-- Card 3: Graduation -->
+          <div class="card photo_card" >
+            <img src="{{url_for('static', filename='graduation.jfif')}}"/>
+            <div class="card-body">
+                <p class="card-text">Graduation</p>
+                
+            </div>
+        </div>
+
+        <!-- Card 4: Sport -->
+        <div class="card photo_card" >
+          <img src="{{url_for('static', filename='sport.jpg')}}"/>
+          <div class="card-body">
+              <p class="card-text">Sport</p>
+              
+          </div>
+      </div>
+
+      <!-- Card 5: ID -->
+      <div class="card photo_card" >
+        <img src="{{url_for('static', filename='ID.jpg')}}"/>
+        <div class="card-body">
+            <p class="card-text">ID</p> 
+        </div>
+    </div>
+            </div>
+                
+
+            <div class="col-md-2"></div>
+        </div>
+        
+          
+    </div>
+      
+
+      <!-- Footer -->
+    <div style="background-color: #1b52b8; padding: 1% 1% 1% 1%;">
+      <div class="row">
+          <!-- Left -->
+          <div class="col-md-4">
+            <p class="footer_text" style="font-weight: bold;">FR Photography Studio</p>
+            <p class="footer_text">All Your Photography Needs!</p>
+            <p class="footer_text">Wedding / Travel / Graduation / Sport / ID</p>
+          </div>
+
+          <!-- Middle: Recent Posts -->
+          <div class="col-md-4">
+            <p class="footer_text" style="font-weight: bold;">Address</p>
+            <p class="footer_text">811 West Campbell Road</p>
+            <p class="footer_text">Richardson, TX 75080-3021 </p>
+          </div>
+
+          <!-- Right: Contact US -->
+          <div class="col-md-4">
+            <p class="footer_text" style="font-weight: bold;">Contact Us</p>
+            <p class="footer_text">Xizhen Yang & Churong Zhang</p>
+            <p class="footer_text">800-123-0000 </p>
+          </div>
+      </div>
+    </div>
+  
+  
 </body>
 
 </html>
