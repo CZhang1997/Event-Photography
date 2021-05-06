@@ -18,6 +18,24 @@
           $("#admin_add").remove();
         }
 
+        $("#search_button").click(() => {
+          const value = $("#search_value").val();
+          const data = { query: "name", value };
+          $.ajax({
+            url: "/items",
+            type: "PUT",
+            data: data,
+            success: function (response) {
+              const data = JSON.parse(response);
+              $("#items").children().remove();
+              parseDataToHtml(data);
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        });
+
         function addCarts(data) {
           $.ajax({
             url: "/carts",
@@ -50,16 +68,10 @@
           });
         }
 
-        function getitems() {
-          $.ajax({
-            url: "/items",
-            type: "GET",
-            success: function (response) {
-              const data = JSON.parse(response);
-              $("#items").children().remove();
-              data.forEach((item, index) => {
-                const { name, event = "", price, _id: id } = item;
-                const i = `
+        function parseDataToHtml(data) {
+          data.forEach((item, index) => {
+            const { name, event = "", price, _id: id } = item;
+            const i = `
                 <tr id="itemRow${id}">
                   <th scope="row">${index + 1}</th>
                   <td>
@@ -73,14 +85,24 @@
                   </td>
                 </tr>
               `;
-                $("#items").append(i);
-                $(`#addCart${id}`).click(() => {
-                  // const title = $(`#inputTitle${id}`).val();
-                  // const description = $(`#inputDescription${id}`).val();
-                  const data = { id };
-                  addCarts(data);
-                });
-              });
+            $("#items").append(i);
+            $(`#addCart${id}`).click(() => {
+              // const title = $(`#inputTitle${id}`).val();
+              // const description = $(`#inputDescription${id}`).val();
+              const data = { id };
+              addCarts(data);
+            });
+          });
+        }
+
+        function getitems() {
+          $.ajax({
+            url: "/items",
+            type: "GET",
+            success: function (response) {
+              const data = JSON.parse(response);
+              $("#items").children().remove();
+              parseDataToHtml(data);
             },
             error: function (error) {
               console.log(error);
@@ -123,6 +145,21 @@
       <div class="jumbotron">
         <h1>Welcome Home</h1>
       </div>
+      <form id="search_form" className="form-inline">
+        <input
+          className="form-control"
+          type="search"
+          id="search_value"
+          placeholder="Search name"
+        />
+        <button
+          className="btn btn-outline-success"
+          id="search_button"
+          type="button"
+        >
+          Search
+        </button>
+      </form>
       <table class="table">
         <thead>
           <tr>

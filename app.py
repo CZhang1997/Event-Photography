@@ -156,11 +156,11 @@ def updateItem(id):
     if session.get('user'):
         query = { '_id':  ObjectId(id) }
         name = request.form['name']
-        available = request.form['available']
+        event = request.form['event']
         price = request.form['price']
         if price[0] == '$':
             price = float(price[1:])
-        newItem ={"$set": {"name": name , "available": available, "price": price }}
+        newItem ={"$set": {"name": name , "event": event, "price": price }}
         myitems.update_one(query, newItem)
         return json.dumps({'message': 'Video deleted successfully !'})
     else:
@@ -209,6 +209,17 @@ def deleteCartsItem(id):
 	query = { '_id':  ObjectId(id) }
 	mycarts.delete_one(query)
 	return json.dumps({'message': 'cart item deleted successfully !'})
+
+@app.route('/items', methods=['PUT'])
+def searchItems():
+    query = request.form['query']
+    value = request.form['value']
+    records = myitems.find({query: { "$regex": value }})
+    response = []
+    for record in records:
+        record["_id"] = str(record["_id"])
+        response.append(record)
+    return json.dumps(response)
 
 if __name__ == "__main__":
     app.run()
