@@ -74,7 +74,7 @@
               $("#totalPrices").children().remove();
               var total = 0;
               data.forEach((item, index) => {
-                const { name, available, price, _id: id } = item;
+                const { name, event = "", price, _id: id } = item;
                 total += price;
                 const i = `
                 <tr id="itemRow${id}">
@@ -82,7 +82,7 @@
                   <td>
                   ${name}</td>
                   <td>
-                    ${available}</td>
+                    ${event}</td>
                   <td> $${price}
                   </td>
                   <td> 
@@ -147,7 +147,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Available Days</th>
+            <th scope="col">Event type</th>
             <th scope="col">Price</th>
             <th scope="col">Remove</th>
           </tr>

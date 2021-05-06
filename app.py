@@ -108,11 +108,11 @@ def addItem():
     try:
         if session.get('user'):
             name = request.form['name']
-            available = request.form['available']
+            event = request.form['event']
             price = request.form['price']
             if price[0] == '$':
                 price = float(price[1:])
-            newItem = {"name": name , "available": available, "price": price }
+            newItem = {"name": name , "event": event, "price": price }
             _id = myitems.insert_one(newItem)
             return json.dumps({"message": "add item done"})
         else:

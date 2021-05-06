@@ -12,22 +12,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-        // function setStatus(data) {
-        //   console.log(data);
-        //   $.ajax({
-        //     url: "/setStatus",
-        //     type: "PUT",
-        //     data: data,
-        //     success: function (response) {
-        //       console.log(response);
-        //       // alert(message);
-        //     },
-        //     error: function (err) {
-        //       console.log(err);
-        //     },
-        //   });
-        // }
-
         function updateItem(data) {
           const { id } = data;
           $.ajax({
@@ -69,7 +53,7 @@
               const data = JSON.parse(response);
               $("#items").children().remove();
               data.forEach((item, index) => {
-                const { name, available, price, _id: id } = item;
+                const { name, event = "", price, _id: id } = item;
                 const i = `
                 <tr id="itemRow${id}">
                   <th scope="row">${index + 1}</th>
@@ -85,7 +69,7 @@
                       type="text"
                       name="inputDescription"
                       id="inputDescription${id}"
-                      value="${available}"
+                      value="${event}"
                     /></td>
                   <td> 
                     <input
@@ -111,9 +95,9 @@
                 });
                 $(`#save${id}`).click(() => {
                   const name = $(`#inputTitle${id}`).val();
-                  const available = $(`#inputDescription${id}`).val();
+                  const event = $(`#inputDescription${id}`).val();
                   const price = $(`#inputPrice${id}`).val();
-                  const data = { id, name, available, price };
+                  const data = { id, name, event, price };
                   updateItem(data);
                 });
               });
@@ -164,7 +148,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Available Days</th>
+            <th scope="col">Event type</th>
             <th scope="col">Price</th>
             <th scope="col">Modify</th>
             <th scope="col">Action</th>
