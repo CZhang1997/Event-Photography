@@ -61,28 +61,46 @@
 
     <style>
       .footer_text {
-      text-align: center;
-    }
-</style>
+        text-align: center;
+      }
+    </style>
   </head>
 
-  <body style="padding:0%;">
+  <body style="padding: 0%">
     <!-- Navigation Bar -->
-    <div style="background-color: #e4b826; padding: 1.5% 1% 1.5% 1%; ">
-      <nav class="navbar navbar-expand-lg navbar-dark"> 
-        <a class="navbar-brand" style="font-family:Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-large;" >FR Photography Studio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <div style="background-color: #e4b826; padding: 1.5% 1% 1.5% 1%">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a
+          class="navbar-brand"
+          style="
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: x-large;
+          "
+          >FR Photography Studio</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Sign in</a>
+              <a class="nav-link" href="/"
+                >Home <span class="sr-only">(current)</span></a
+              >
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="showSignin">Sign in</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="showSignUp">Sign up</a>
             </li>
           </ul>
@@ -91,77 +109,101 @@
     </div>
 
     <!-- Sign Up-->
-    <div style="margin-top: 10%; padding-left: 10%; padding-right: 10%; margin-left: 30%; margin-right: 30%;">
-      <h1 style="text-align: center;">Sign Up a New Account</h1>
-      <!-- Sign up form -->
-      <form class="form-signup">
-        <!-- Name -->
-        <label for="inputName" class="sr-only">Name</label>
-        <input
-          type="name"
-          name="inputName"
-          id="inputName"
-          class="form-control"
-          placeholder="Name"
-          required
-          autofocus
-        />
-        <!-- Email -->
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input
-          type="email"
-          name="inputEmail"
-          id="inputEmail"
-          class="form-control"
-          placeholder="Email address"
-          required
-          autofocus
-        />
-        <div id="message"></div>
-        <!-- Password -->
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input
-          type="password"
-          name="inputPassword"
-          id="inputPassword"
-          class="form-control"
-          placeholder="Password"
-          required
-        />
-        <!-- Submit Button -->
-        <button
-          id="btnSignUp"
-          class="btn btn-lg btn-primary btn-block"
-          type="button"
-        >
-          Sign up
-        </button>
-      </form>
+    <div style="height: 80%">
+      <div
+        style="
+          /* margin-top: 10%; */
+          padding-left: 10%;
+          padding-right: 10%;
+          margin-left: 30%;
+          margin-right: 30%;
+        "
+      >
+        <h1 style="text-align: center">Sign Up a New Account</h1>
+        <!-- Sign up form -->
+        <form class="form-signup">
+          <!-- Name -->
+          <label for="inputName" class="sr-only">Name</label>
+          <input
+            type="name"
+            name="inputName"
+            id="inputName"
+            class="form-control"
+            placeholder="Name"
+            required
+            autofocus
+          />
+          <!-- Email -->
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input
+            type="email"
+            name="inputEmail"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email address"
+            required
+            autofocus
+          />
+          <div id="message"></div>
+          <!-- Password -->
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input
+            type="password"
+            name="inputPassword"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <!-- Submit Button -->
+          <button
+            id="btnSignUp"
+            class="btn btn-lg btn-primary btn-block"
+            type="button"
+          >
+            Sign up
+          </button>
+        </form>
+      </div>
     </div>
 
     <!-- Footer -->
-    <div style="background-color: #e4b826; padding: 1% 1% 1% 1%; position: fixed; width: 100%; bottom: 0;">
+    <div
+      style="
+        background-color: #e4b826;
+        padding: 1% 1% 1% 1%;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      "
+    >
       <div class="row">
-          <!-- Left: Company -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">FR Photography Studio</p>
-            <p class="footer_text" style="font-weight: bold;">All Your Photography Needs!</p>
-            <p class="footer_text" style="font-weight: bold;">Wedding / Travel / Graduation / Sport / ID</p>
-          </div>
+        <!-- Left: Company -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">
+            FR Photography Studio
+          </p>
+          <p class="footer_text" style="font-weight: bold">
+            All Your Photography Needs!
+          </p>
+          <p class="footer_text" style="font-weight: bold">
+            Wedding / Travel / Graduation / Sport / ID
+          </p>
+        </div>
 
-          <!-- Middle: Address -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">Address</p>
-            <p class="footer_text">811 West Campbell Road</p>
-            <p class="footer_text">Richardson, TX 75080-3021 </p>
-          </div>
+        <!-- Middle: Address -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">Address</p>
+          <p class="footer_text">811 West Campbell Road</p>
+          <p class="footer_text">Richardson, TX 75080-3021</p>
+        </div>
 
-          <!-- Right: Contact -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">Contact Us</p>
-            <p class="footer_text">Xizhen Yang & Churong Zhang</p>
-            <p class="footer_text">800-123-0000 </p>
-          </div>
+        <!-- Right: Contact -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">Contact Us</p>
+          <p class="footer_text">Xizhen Yang & Churong Zhang</p>
+          <p class="footer_text">800-123-0000</p>
+        </div>
       </div>
     </div>
   </body>
