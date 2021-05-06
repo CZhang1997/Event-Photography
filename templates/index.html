@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Python Flask Todo List App</title>
 
-     <!-- Bootstrap CSS -->
+   <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- CSS-->
     <style type="text/css">
       .card {
         padding-top: 5%;
@@ -24,17 +24,14 @@
       }
 
       .footer_text {
-        color:#ECF5FF;
         text-align: center;
       }
-     </style>
-      
-</head>
+    </style>
+  </head>
 
-<body>
-
+  <body>
     <!-- Navigation Bar -->
-    <div style="background-color: #1b52b8; padding: 1.5% 1% 1.5% 1%; ">
+    <div style="background-color: #e4b826; padding: 1.5% 1% 1.5% 1%; ">
       <nav class="navbar navbar-expand-lg navbar-dark"> 
         <a class="navbar-brand" style="font-family:Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-large;" >FR Photography Studio</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,94 +49,82 @@
               <a class="nav-link" href="showSignUp">Sign up</a>
             </li>
           </ul>
-          
-          <form class="form-inline my-2 my-lg-0">
-            <input class="mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: #da1879; color: white;">Search</button>
-          </form>
         </div>
       </nav>
     </div>
-
      
-      <!-- Main Page -->
-      <div style="background-color: #ECF5FF; padding: 1% 1% 1% 1%;"> 
-        <div class = "row">
-            <!-- Left Area-->
-            <div class="col-md-2"></div>
+    <!-- Main Page -->
+    <div style="background-color: #ECF5FF; padding: 1% 1% 1% 1%;"> 
+      <div class = "row">
+        <!-- Left Area-->
+        <div class="col-md-3"></div>
             
-            <!-- Middle Area-->
-            <div class="col-md-8">
-              <!-- Card 1: Wedding-->
-              <div class="card photo_card" >
-                <img src="{{url_for('static', filename='wedding.jpg')}}"/>
-                <div class="card-body">
-                    <p class="card-text">Wedding</p>
-                    
-                </div>
+        <!-- Middle Area-->
+        <div class="col-md-6">
+          <!-- Card 1: Wedding-->
+          <div class="card photo_card" >
+            <img src="{{url_for('static', filename='wedding.jpg')}}"/>
+            <div class="card-body">
+              <p class="card-text">Wedding</p>
             </div>
+          </div>
 
-            <!-- Card 2: Travel -->
-            <div class="card photo_card" >
-              <img src="{{url_for('static', filename='travel.jpg')}}"/>
-              <div class="card-body">
-                  <p class="card-text">Travel</p> 
-              </div>
+          <!-- Card 2: Travel -->
+          <div class="card photo_card" >
+            <img src="{{url_for('static', filename='travel.jpg')}}"/>
+            <div class="card-body">
+              <p class="card-text">Travel</p> 
+            </div>
           </div>
 
           <!-- Card 3: Graduation -->
           <div class="card photo_card" >
             <img src="{{url_for('static', filename='graduation.jfif')}}"/>
             <div class="card-body">
-                <p class="card-text">Graduation</p>
-                
+              <p class="card-text">Graduation</p>   
             </div>
-        </div>
-
-        <!-- Card 4: Sport -->
-        <div class="card photo_card" >
-          <img src="{{url_for('static', filename='sport.jpg')}}"/>
-          <div class="card-body">
-              <p class="card-text">Sport</p>
-              
           </div>
-      </div>
 
-      <!-- Card 5: ID -->
-      <div class="card photo_card" >
-        <img src="{{url_for('static', filename='ID.jpg')}}"/>
-        <div class="card-body">
-            <p class="card-text">ID</p> 
-        </div>
-    </div>
+          <!-- Card 4: Sport -->
+          <div class="card photo_card" >
+            <img src="{{url_for('static', filename='sport.jpg')}}"/>
+            <div class="card-body">
+              <p class="card-text">Sport</p>
             </div>
-                
+          </div>
 
-            <div class="col-md-2"></div>
+          <!-- Card 5: ID -->
+          <div class="card photo_card" >
+            <img src="{{url_for('static', filename='ID.jpg')}}"/>
+            <div class="card-body">
+              <p class="card-text">ID</p> 
+            </div>
+          </div>    
         </div>
-        
-          
+
+        <!-- Right Area-->
+        <div class="col-md-3"></div>
+      </div>    
     </div>
       
-
-      <!-- Footer -->
-    <div style="background-color: #1b52b8; padding: 1% 1% 1% 1%;">
+    <!-- Footer -->
+    <div style="background-color: #e4b826; padding: 1% 1% 1% 1%; width: 100%; bottom: 0;">
       <div class="row">
-          <!-- Left -->
+          <!-- Left: Company -->
           <div class="col-md-4">
             <p class="footer_text" style="font-weight: bold;">FR Photography Studio</p>
-            <p class="footer_text">All Your Photography Needs!</p>
-            <p class="footer_text">Wedding / Travel / Graduation / Sport / ID</p>
+            <p class="footer_text" style="font-weight: bold;">All Your Photography Needs!</p>
+            <p class="footer_text" style="font-weight: bold;">Wedding / Travel / Graduation / Sport / ID</p>
           </div>
 
-          <!-- Middle: Recent Posts -->
+          <!-- Middle: Address -->
           <div class="col-md-4">
             <p class="footer_text" style="font-weight: bold;">Address</p>
             <p class="footer_text">811 West Campbell Road</p>
             <p class="footer_text">Richardson, TX 75080-3021 </p>
           </div>
 
-          <!-- Right: Contact US -->
+          <!-- Right: Contact -->
           <div class="col-md-4">
             <p class="footer_text" style="font-weight: bold;">Contact Us</p>
             <p class="footer_text">Xizhen Yang & Churong Zhang</p>
@@ -147,8 +132,6 @@
           </div>
       </div>
     </div>
-  
-  
 </body>
 
 </html>
