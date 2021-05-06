@@ -4,6 +4,7 @@ from flask import session
 import hashlib
 from bson.objectid import ObjectId
 import pymongo
+import datetime
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ mydb = myclient["photo"]
 myusers = mydb["users"]
 myitems = mydb["items"]
 mycarts = mydb["carts"]
+mypurchases = mydb["purchases"]
 
 app.secret_key = 'secret key can be anything!'
 
@@ -36,6 +38,10 @@ def userHome():
         return render_template('userHome.html', userLevel = session.get('level'))
     else:
         return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/showPurchases')
+def showPurchases():
+    return render_template('purchases.html', userLevel = session.get('level'))
 
 @app.route('/admin')
 def admin():
@@ -95,7 +101,6 @@ def signUp():
     if name and email and password:
         new = {"name": name, "email": email, "password": password, "level": 0}
         _id = myusers.insert_one(new).inserted_id
-        print(str(_id))
         session['user'] = str(_id)
         session['level'] = 0
         return json.dumps({'message': 'Video created successfully !', "_id": str(_id)})
@@ -139,7 +144,6 @@ def getItems():
 def checkUsername():
     email = request.form['inputEmail']
     record = myusers.find_one({"email": email })
-    # print(record)
     return json.dumps({"exist": record != None})
 
 @app.route('/items/<id>', methods=['DELETE'])
@@ -195,7 +199,7 @@ def getCarts():
                 if item == None:
                     continue
                 record["name"] = item["name"]
-                record["available"] = item["available"]
+                record["event"] = item["event"]
                 record["price"] = item["price"]
                 response.append(record)
             return json.dumps(response)
@@ -212,14 +216,55 @@ def deleteCartsItem(id):
 
 @app.route('/items', methods=['PUT'])
 def searchItems():
-    query = request.form['query']
-    value = request.form['value']
-    records = myitems.find({query: { "$regex": value }})
-    response = []
-    for record in records:
-        record["_id"] = str(record["_id"])
-        response.append(record)
-    return json.dumps(response)
+    if session.get('user'):
+        query = request.form['query']
+        value = request.form['value']
+        records = myitems.find({query: { "$regex": value }})
+        response = []
+        for record in records:
+            record["_id"] = str(record["_id"])
+            response.append(record)
+        return json.dumps(response)
+    else:
+        return json.dumps({"code":404 , "message":"please login first"})
+
+@app.route('/purchases', methods=['POST'])
+def purchases():
+    if session.get('user'):
+        userId = session.get('user')
+        records = mycarts.find({"userId": userId})
+        items = []
+        for record in records:
+            items.append(record["itemId"])
+        mypurchases.insert_one({"items": items, "userId": userId, "date": datetime.datetime.now()})
+        mycarts.delete_many({"userId": userId})
+        return json.dumps({'message': 'purchase successfully !'})
+    else:
+        return json.dumps({"code":404 , "message":"please login first"})
+
+@app.route('/purchases', methods=['GET'])
+def history():
+    if session.get('user'):
+        userId = session.get('user')
+        records = mypurchases.find({"userId": userId})
+        response = []
+        for record in records:
+            record["_id"] = str(record["_id"])
+            history = {}
+            items = []
+            for i in record["items"]:
+                item = myitems.find_one({"_id": ObjectId(i)})
+                if item == None:
+                    continue
+                item["_id"] = str(item["_id"])
+                items.append(item)
+            history["items"] = items
+            history["date"] = record["date"]
+            response.append(history)
+        return json.dumps(response)
+    else:
+        return json.dumps({"code":404 , "message":"please login first"})
+
 
 if __name__ == "__main__":
     app.run()

@@ -2,41 +2,66 @@
 <html lang="en">
   <head>
     <title>Python Flask Todo List App</title>
-
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-
     <link href="../static/signup.css" rel="stylesheet" />
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script>
-      $(function () {
-        $("#btnAddItem").click(function () {
-          console.log($("form").serialize());
-          const data = $("form").serialize();
+      $(document).ready(() => {
+        const userLevel = Number("{{userLevel}}");
+        if (userLevel === 0) {
+          $("#admin_view").remove();
+          $("#admin_add").remove();
+        }
+
+        function parseDataToHtml(data, date) {
+          data.forEach((item, index) => {
+            const { name, event = "", price, _id: id } = item;
+            const i = `
+                <tr id="itemRow${id}">
+                  <th scope="row">${index + 1}</th>
+                  <td>
+                  ${name}</td>
+                  <td>
+                    ${event}</td>
+                  <td> $${price}
+                  </td>
+                  <td>
+                    ${date}
+                  </td>
+                </tr>
+              `;
+            $("#items").append(i);
+          });
+        }
+
+        function getitems() {
           $.ajax({
-            url: "/items",
-            data: $("form").serialize(),
-            type: "POST",
+            url: "/purchases",
+            type: "GET",
             success: function (response) {
               const data = JSON.parse(response);
-              alert(data.message);
-              window.location.href = "/userHome";
+              const { items } = data;
+              $("#items").children().remove();
+              data.forEach((record) => {
+                const { date, items } = record;
+                parseDataToHtml(items, date);
+              });
             },
             error: function (error) {
               console.log(error);
             },
           });
-        });
+        }
+        // fetch data for the first time
+        getitems();
       });
     </script>
   </head>
-
   <body>
     <div class="container">
       <div class="header">
@@ -49,13 +74,13 @@
               <li class="nav-item">
                 <a class="nav-link" href="/showCarts">Shopping Cart</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="/showPurchases">Purchase History</a>
               </li>
               <li id="admin_view" class="nav-item">
                 <a class="nav-link" href="/admin">Admin View</a>
               </li>
-              <li class="nav-item active">
+              <li id="admin_add" class="nav-item">
                 <a class="nav-link" href="/showAddItem">Add Item</a>
               </li>
               <li class="nav-item">
@@ -69,47 +94,20 @@
       </div>
 
       <div class="jumbotron">
-        <legend>Add a photo</legend>
-        <form class="form-todo">
-          <label for="txtName" class="sr-only">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            class="form-control"
-            placeholder="Name"
-            required
-            autofocus
-          />
-          <label for="event" class="sr-only">event</label>
-          <input
-            type="text"
-            name="event"
-            id="event"
-            class="form-control"
-            placeholder="event"
-            required
-            autofocus
-          />
-          <label for="txtPrices" class="sr-only">Prices</label>
-          <input
-            type="text"
-            name="price"
-            id="price"
-            class="form-control"
-            placeholder="Prices"
-            required
-            autofocus
-          />
-          <button
-            id="btnAddItem"
-            class="btn btn-lg btn-primary btn-block"
-            type="button"
-          >
-            Add
-          </button>
-        </form>
+        <h1>Welcome to Purchase Page</h1>
       </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Event type</th>
+            <th scope="col">Price</th>
+            <th scope="col">Purchase Date</th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+      </table>
     </div>
   </body>
 </html>
