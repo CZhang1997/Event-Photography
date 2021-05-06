@@ -197,6 +197,7 @@ def getCarts():
                 itemId = record["itemId"]
                 item = myitems.find_one({"_id": ObjectId(itemId)})
                 if item == None:
+                    mycarts.delete_one({"_id": ObjectId(record['_id'])})
                     continue
                 record["name"] = item["name"]
                 record["event"] = item["event"]

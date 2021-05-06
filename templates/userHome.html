@@ -17,10 +17,17 @@
           $("#admin_view").remove();
           $("#admin_add").remove();
         }
-
-        $("#search_button").click(() => {
-          const value = $("#search_value").val();
-          const data = { query: "name", value };
+        $("#events_type").change(() => {
+          const value = $("#events_type").val();
+          console.log($("#events_type").val());
+          if (value === "All") {
+            getitems();
+          } else {
+            search("event", value);
+          }
+        });
+        function search(query, value) {
+          const data = { query, value };
           $.ajax({
             url: "/items",
             type: "PUT",
@@ -34,6 +41,10 @@
               console.log(err);
             },
           });
+        }
+        $("#search_button").click(() => {
+          const value = $("#search_value").val();
+          search("name", value);
         });
 
         function addCarts(data) {
@@ -69,8 +80,10 @@
         }
 
         function parseDataToHtml(data) {
+          let events = new Set();
           data.forEach((item, index) => {
             const { name, event = "", price, _id: id } = item;
+            events.add(event);
             const i = `
                 <tr id="itemRow${id}">
                   <th scope="row">${index + 1}</th>
@@ -93,6 +106,11 @@
               addCarts(data);
             });
           });
+          // $("#events_type").children().remove();
+          // $("#events_type").append(`<option value="All">All</option>`);
+          // events.forEach((e) => {
+          //   $("#events_type").append(`<option value="${e}">${e}</option>`);
+          // });
         }
 
         function getitems() {
@@ -148,21 +166,31 @@
       <div class="jumbotron">
         <h1>Welcome Home</h1>
       </div>
-      <form id="search_form" className="form-inline">
-        <input
-          className="form-control"
-          type="search"
-          id="search_value"
-          placeholder="Search name"
-        />
-        <button
-          className="btn btn-outline-success"
-          id="search_button"
-          type="button"
-        >
-          Search
-        </button>
-      </form>
+      <div style="display: flex">
+        <select name="events" id="events_type">
+          <option value="All">All</option>
+          <option value="Wedding">Wedding</option>
+          <option value="Travel">Travel</option>
+          <option value="Graduation">Graduation</option>
+          <option value="Sport">Sport</option>
+          <option value="ID">ID</option>
+        </select>
+        <form id="search_form" className="form-inline">
+          <input
+            className="form-control"
+            type="search"
+            id="search_value"
+            placeholder="Search name"
+          />
+          <button
+            className="btn btn-outline-success"
+            id="search_button"
+            type="button"
+          >
+            Search
+          </button>
+        </form>
+      </div>
       <table class="table">
         <thead>
           <tr>
