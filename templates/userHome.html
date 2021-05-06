@@ -45,6 +45,7 @@
         $("#search_button").click(() => {
           const value = $("#search_value").val();
           search("name", value);
+          $("#events_type").val("All");
         });
 
         function addCarts(data) {

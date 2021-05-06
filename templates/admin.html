@@ -65,12 +65,14 @@
                       value="${name}"
                     /></td>
                   <td>
-                    <input
-                      type="text"
-                      name="inputDescription"
-                      id="inputDescription${id}"
-                      value="${event}"
-                    /></td>
+                    <select name="event" id="events_type${id}">
+            <option value="Wedding">Wedding</option>
+            <option value="Travel">Travel</option>
+            <option value="Graduation">Graduation</option>
+            <option value="Sport">Sport</option>
+            <option value="ID">ID</option>
+          </select>
+                    </td>
                   <td> 
                     <input
                       type="text"
@@ -88,6 +90,7 @@
                 </tr>
               `;
                 $("#items").append(i);
+                $(`#events_type${id}`).val(event);
 
                 $(`#deleteId${id}`).click(() => {
                   const data = { id };
@@ -95,7 +98,7 @@
                 });
                 $(`#save${id}`).click(() => {
                   const name = $(`#inputTitle${id}`).val();
-                  const event = $(`#inputDescription${id}`).val();
+                  const event = $(`#events_type${id}`).val();
                   const price = $(`#inputPrice${id}`).val();
                   const data = { id, name, event, price };
                   updateItem(data);

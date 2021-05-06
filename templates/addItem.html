@@ -82,15 +82,13 @@
             autofocus
           />
           <label for="event" class="sr-only">event</label>
-          <input
-            type="text"
-            name="event"
-            id="event"
-            class="form-control"
-            placeholder="event"
-            required
-            autofocus
-          />
+          <select name="event" id="events_type">
+            <option value="Wedding">Wedding</option>
+            <option value="Travel">Travel</option>
+            <option value="Graduation">Graduation</option>
+            <option value="Sport">Sport</option>
+            <option value="ID">ID</option>
+          </select>
           <label for="txtPrices" class="sr-only">Prices</label>
           <input
             type="text"
