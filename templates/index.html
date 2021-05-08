@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Python Flask Todo List App</title>
+    <title>FR Photography Studio</title>
 
-   <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 
     <!-- CSS-->
     <style type="text/css">
@@ -32,10 +37,27 @@
 
   <body>
     <!-- Navigation Bar -->
-    <div style="background-color: #4e4d49; padding: 1.5% 1% 1.5% 1%; ">
-      <nav class="navbar navbar-expand-lg navbar-dark"> 
-        <a class="navbar-brand" style="font-family:Arial, Helvetica, sans-serif; font-weight: bold; font-size: x-large; color: #e4b826;" >FR Photography Studio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <div style="background-color: #4e4d49; padding: 1.5% 1% 1.5% 1%">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a
+          class="navbar-brand"
+          style="
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: x-large;
+            color: #e4b826;
+          "
+          >FR Photography Studio</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -53,86 +75,98 @@
         </div>
       </nav>
     </div>
-     
+
     <!-- Main Page -->
-    <div style="background-color: #ECF5FF; padding: 1% 1% 1% 1%;"> 
-      <div class = "row">
+    <div style="background-color: #ecf5ff; padding: 1% 1% 1% 1%">
+      <div class="row">
         <!-- Left Area-->
         <div class="col-md-3"></div>
-            
+
         <!-- Middle Area-->
         <div class="col-md-6">
           <!-- Card 1: Wedding-->
-          <div class="card photo_card" >
-            <img src="{{url_for('static', filename='wedding.jpg')}}"/>
+          <div class="card photo_card">
+            <img src="{{url_for('static', filename='wedding.jpg')}}" />
             <div class="card-body">
               <p class="card-text">Wedding</p>
             </div>
           </div>
 
           <!-- Card 2: Travel -->
-          <div class="card photo_card" >
-            <img src="{{url_for('static', filename='travel.jpg')}}"/>
+          <div class="card photo_card">
+            <img src="{{url_for('static', filename='travel.jpg')}}" />
             <div class="card-body">
-              <p class="card-text">Travel</p> 
+              <p class="card-text">Travel</p>
             </div>
           </div>
 
           <!-- Card 3: Graduation -->
-          <div class="card photo_card" >
-            <img src="{{url_for('static', filename='graduation.jfif')}}"/>
+          <div class="card photo_card">
+            <img src="{{url_for('static', filename='graduation.jfif')}}" />
             <div class="card-body">
-              <p class="card-text">Graduation</p>   
+              <p class="card-text">Graduation</p>
             </div>
           </div>
 
           <!-- Card 4: Sport -->
-          <div class="card photo_card" >
-            <img src="{{url_for('static', filename='sport.jpg')}}"/>
+          <div class="card photo_card">
+            <img src="{{url_for('static', filename='sport.jpg')}}" />
             <div class="card-body">
               <p class="card-text">Sport</p>
             </div>
           </div>
 
           <!-- Card 5: ID -->
-          <div class="card photo_card" >
-            <img src="{{url_for('static', filename='ID.jpg')}}"/>
+          <div class="card photo_card">
+            <img src="{{url_for('static', filename='ID.jpg')}}" />
             <div class="card-body">
-              <p class="card-text">ID</p> 
+              <p class="card-text">ID</p>
             </div>
-          </div>    
+          </div>
         </div>
 
         <!-- Right Area-->
         <div class="col-md-3"></div>
-      </div>    
-    </div>
-      
-    <!-- Footer -->
-    <div style="background-color: #4e4d49; padding: 1% 1% 1% 1%; width: 100%; bottom: 0;">
-      <div class="row">
-          <!-- Left: Company -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">FR Photography Studio</p>
-            <p class="footer_text" style="font-weight: bold;">All Your Photography Needs!</p>
-            <p class="footer_text" style="font-weight: bold;">Wedding / Travel / Graduation / Sport / ID</p>
-          </div>
-
-          <!-- Middle: Address -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">Address</p>
-            <p class="footer_text">811 West Campbell Road</p>
-            <p class="footer_text">Richardson, TX 75080-3021 </p>
-          </div>
-
-          <!-- Right: Contact -->
-          <div class="col-md-4">
-            <p class="footer_text" style="font-weight: bold;">Contact Us</p>
-            <p class="footer_text">Xizhen Yang & Churong Zhang</p>
-            <p class="footer_text">800-123-0000 </p>
-          </div>
       </div>
     </div>
-</body>
 
+    <!-- Footer -->
+    <div
+      style="
+        background-color: #4e4d49;
+        padding: 1% 1% 1% 1%;
+        width: 100%;
+        bottom: 0;
+      "
+    >
+      <div class="row">
+        <!-- Left: Company -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">
+            FR Photography Studio
+          </p>
+          <p class="footer_text" style="font-weight: bold">
+            All Your Photography Needs!
+          </p>
+          <p class="footer_text" style="font-weight: bold">
+            Wedding / Travel / Graduation / Sport / ID
+          </p>
+        </div>
+
+        <!-- Middle: Address -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">Address</p>
+          <p class="footer_text">811 West Campbell Road</p>
+          <p class="footer_text">Richardson, TX 75080-3021</p>
+        </div>
+
+        <!-- Right: Contact -->
+        <div class="col-md-4">
+          <p class="footer_text" style="font-weight: bold">Contact Us</p>
+          <p class="footer_text">Xizhen Yang & Churong Zhang</p>
+          <p class="footer_text">800-123-0000</p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
