@@ -60,7 +60,7 @@
               var total = 0;
               data.forEach((item, index) => {
                 const { name, event = "", price, _id: id } = item;
-                total += price;
+                total += Number(price) ;
                 const i = `
                 <tr id="itemRow${id}">
                   <th scope="row">${index + 1}</th>
