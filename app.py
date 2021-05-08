@@ -103,7 +103,7 @@ def signUp():
         _id = myusers.insert_one(new).inserted_id
         session['user'] = str(_id)
         session['level'] = 0
-        return json.dumps({'message': 'Video created successfully !', "_id": str(_id)})
+        return json.dumps({'message': 'Account created successfully !', "_id": str(_id)})
     else:
         return json.dumps({'html':'<span>Enter the required fields!</span>'})
 

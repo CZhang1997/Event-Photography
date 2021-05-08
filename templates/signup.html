@@ -17,6 +17,9 @@
       $(function () {
         $("#btnSignUp").click(function () {
           const data = $("form").serialize();
+          if (!validatePW($("#inputPassword").val())) {
+            return;
+          }
           $.ajax({
             url: "/signUp",
             data: data,
@@ -31,10 +34,36 @@
             },
           });
         });
+        function validatePW(pw) {
+          var uppercase = false;
+          var lowercase = false;
+          for (var i = 0; i < pw.length; i++) {
+            const c = pw.charAt(i);
+            if (c >= "a" && c <= "z") {
+              lowercase = true;
+            }
+            if (c >= "A" && c <= "Z") {
+              uppercase = true;
+            }
+          }
+          return uppercase && lowercase;
+        }
+
+        $("#inputPassword").change(() => {
+          const pw = $("#inputPassword").val();
+          if (validatePW(pw)) {
+            $("#btnSignUp").prop("disabled", false);
+            $("#messagePW").html("");
+          } else {
+            $("#btnSignUp").prop("disabled", true);
+            $("#messagePW").html(
+              "Sorry, password must contains upper case and lower case letter"
+            );
+          }
+        });
+
         $("#inputEmail").change(() => {
           const val = $("#inputEmail").val();
-          console.log(val);
-
           $.ajax({
             url: "/users",
             data: { inputEmail: val },
@@ -47,8 +76,10 @@
                 $("#message").html(
                   "Sorry, this username/email has already registered"
                 );
+                $("#btnSignUp").prop("disabled", true);
               } else {
                 $("#message").html("you can use this username!");
+                $("#btnSignUp").prop("disabled", false);
               }
             },
             error: function (error) {
@@ -155,6 +186,7 @@
             placeholder="Password"
             required
           />
+          <div id="messagePW"></div>
           <!-- Submit Button -->
           <button
             id="btnSignUp"
